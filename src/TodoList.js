@@ -7,7 +7,7 @@ class TodoList extends Component{
         super(props);
         this.state = {
             inputValue: '',
-            list: []
+            list: []  
         }
     }
 
@@ -41,7 +41,7 @@ class TodoList extends Component{
                     }
                 </ul>
             </Fragment>
-        )
+        ) 
     }
 
     handleInputChange(e){
