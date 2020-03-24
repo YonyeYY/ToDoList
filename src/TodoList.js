@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import './style.css';
 import TodoItem from './TodoItem';
-import Test from './Test';
 
 
 class TodoList extends Component {
@@ -19,6 +18,7 @@ class TodoList extends Component {
 
 
     render() {
+        console.log("render");
         return (
             <Fragment>
                 <div>
@@ -33,16 +33,44 @@ class TodoList extends Component {
                         className='input'
                         value={this.state.inputValue}
                         onChange={this.handleInputChange}
+                        ref={(input) => {this.input = input}}
                     />
                     <button onClick={this.handleBtnClick}>提交</button>
                 </div>
-                <ul>
+                <ul ref={(ul) => {this.ul =ul}}>
                     {this.getTodoItem()}
                 </ul>
-                <Test content={this.state.inputValue}/>
             </Fragment>
         )
     }
+
+    //组件被挂载到页面之后,自动被执行
+    // componentDidMount(){
+    //     axios.get('/api/todolist')
+    //     .then(() => {alert('succ!!')})
+    //     .catch(() => {alert('error!!')})
+    // }
+
+    //组件被更新之前,他会自动被执行
+    shouldComponentUpdate(nextProps,nextState){
+        console.log("this is show componentUpdate.");
+        return true;
+    }
+
+    //组件被更新之前，它会自动执行，但是他在shouldComponent 之后被执行
+    //shouldComponentUpdate 返回true 他才会执行
+    //如果shouldComponentUpdate 返回false，他不会执行
+    componentWillUpdate(){
+        console.log("componentWillUpdate");
+    }
+
+
+    //组件更新完成之后，他会被执行
+    componentDidUpdate(){
+        console.log("componentDidUpdate");
+    }
+
+
 
     getTodoItem(){
         return this.state.list.map((item, index) => {
@@ -57,8 +85,9 @@ class TodoList extends Component {
         })
     }
 
-    handleInputChange(e) {
-        const value = e.target.value;
+    handleInputChange() {
+        const value = this.input.value;
+        //console.log(value);
         this.setState(() => ({
             inputValue: value
         }))
@@ -71,10 +100,13 @@ class TodoList extends Component {
     }
 
     handleBtnClick(e) {
+        //setState 是一个异步函数,它提供第二参数是一个回调方法
         this.setState((prevState)=>({
             list:[...prevState.list,prevState.inputValue],
             inputValue:''
-        }))
+        }),() => {
+            console.log(this.ul.querySelectorAll('div').length);
+        })
 
     }
 
