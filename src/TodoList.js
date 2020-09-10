@@ -4,7 +4,12 @@ import TodoItem from './TodoItem';
 
 
 class TodoList extends Component {
-
+    peaple ={
+        name:'jun',
+        age:15,
+        phone:'12345678909',
+        email:'123.@231.123',
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -107,6 +112,11 @@ class TodoList extends Component {
         }),() => {
             console.log(this.ul.querySelectorAll('div').length);
         })
+
+        console.log(this.peaple);
+
+        delete(this.peaple.email);
+        console.log(this.peaple);
 
     }
 
